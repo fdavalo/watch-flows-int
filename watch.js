@@ -229,40 +229,41 @@ export class Watch {
     checkPodIP(pod) {
 	    var ip = pod.status.podIP;
 	    if ((pod.status.phase=='Running') &&
-		((!pod['eventType']) || (pod.eventType != 'DELETED'))) {
-		if (pod.status.podIP == pod.status.hostIP) {
-			for (var i in this.LocalesIps) {
-				var ipl = this.LocalesIps[i];
-				this.Ips[ipl]['name'] = pod.spec.nodeName;
-				this.Ips[ipl]['type'] = 'node';
-			}
-			for (var pid in this.Pids) {
-				if (this.Pids[pid]['type'] == "node") {
-					this.Pids[pid]['name'] = pod.spec.nodeName + ".process." + this.Pids[pid]['process'];
-				}
-			}
-		}
-		else {
-			if (! this.Ips[ip]) {
-				this.Ips[ip] = {
-					'ip':ip,
-					'type':'pod',
-					'namespace':pod.metadata.namespace,
-					'pod':pod.metadata.name,
-					'name':pod.metadata.namespace+".pod."+pod.metadata.name
-				};
-			}
-			else {
-				this.Ips[ip]['type'] = 'pod';
-				this.Ips[ip]['namespace'] = pod.metadata.namespace;
-				this.Ips[ip]['pod'] = pod.metadata.name;
-				this.Ips[ip]['name'] = pod.metadata.namespace+".pod."+pod.metadata.name;
-			}
-		}
-	}
-	//else if (Ips[ip] && (Ips[ip]['name'] === pod.metadata.namespace+".pod."+pod.metadata.name)) {
-	//	delete Ips[ip];
-	//}
+		    ((!pod['eventType']) || (pod.eventType != 'DELETED'))) {
+		    if (pod.status.podIP == pod.status.hostIP) {
+			    for (var i in this.LocalesIps) {
+				    var ipl = this.LocalesIps[i];
+				    this.Ips[ipl]['name'] = pod.spec.nodeName;
+				    this.Ips[ipl]['type'] = 'node';
+			    }
+			    for (var pid in this.Pids) {
+				    if (this.Pids[pid]['type'] == "node") {
+					    this.Pids[pid]['name'] = pod.spec.nodeName + ".process." + this.Pids[pid]['process'];
+				    }
+			    }
+		    }
+		    else {
+			    if (! this.Ips[ip]) {
+				    this.Ips[ip] = {
+					    'ip':ip,
+					    'type':'pod',
+					    'namespace':pod.metadata.namespace,
+					    'pod':pod.metadata.name,
+					    'name':pod.metadata.namespace+".pod."+pod.metadata.name
+				    };
+			    }
+			    else {
+				    this.Ips[ip]['type'] = 'pod';
+				    this.Ips[ip]['namespace'] = pod.metadata.namespace;
+				    this.Ips[ip]['pod'] = pod.metadata.name;
+				    this.Ips[ip]['name'] = pod.metadata.namespace+".pod."+pod.metadata.name;
+			    }
+		    }
+	    }
+	    //else if (Ips[ip] && (Ips[ip]['name'] === pod.metadata.namespace+".pod."+pod.metadata.name)) {
+	    //	delete Ips[ip];
+	    //}
+    }
 }
 
 //echo "" | openssl s_client -showcerts -connect 216.58.213.163:443 2>/dev/null | grep "^subject=" | awk '{print $(NF);}'
