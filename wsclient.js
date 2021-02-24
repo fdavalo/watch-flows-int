@@ -15,7 +15,7 @@ export class WsClient {
         }
 
         for (var res in this.resources) {
-            this.clients[res].on('connectFailed', this.handleError.bind(this));
+            this.clients[res].on('connectFailed', this.handleConnectError.bind(this));
             this.clients[res].on('connect', this.handleConnect.bind(this));
         }
 
@@ -34,9 +34,13 @@ export class WsClient {
         }
     }
 
+    handleConnectError(error) {
+        console.log('Connect Error: ' + error.toString());
+    }
+
     handleError(name, error) {
         console.log('Connect Error: ' + error.toString());
-        this.disconnect();
+        this.disconnect(name);
     }
 
     handleConnect(connection) {
