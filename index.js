@@ -12,6 +12,6 @@ var resources = {
 	'services':{'serverUrl':'ws://'+process.env.WATCH_SERVICES_URL+':80/'}
 };
 
-new Watch(8080, resources);
+new Watch(process.env.PORT, resources);
 
 
