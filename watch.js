@@ -31,7 +31,7 @@ export class Watch {
     }
 
     handleLine(line) {
-        Lines.push(line);
+        this.Lines.push(line);
 
         if (line.startsWith("stop")) this.handleBatch();
         else {
