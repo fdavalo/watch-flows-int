@@ -15,8 +15,8 @@ export class WsClient {
         }
 
         for (var res in this.resources) {
-            this.clients[res].on('connectFailed', handleError);
-            this.clients[res].on('connect', handleConnect);
+            this.clients[res].on('connectFailed', this.handleError.bind(this));
+            this.clients[res].on('connect', this.handleConnect.bind(this));
         }
 
         this.check();
